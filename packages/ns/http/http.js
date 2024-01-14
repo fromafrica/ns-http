@@ -2,6 +2,7 @@ const dnsPacket = require('dns-packet');
 
 
 export default function main(event) {
+    console.log('Received event:', event);
   try {
       // Decode the DNS query from the HTTP request body (assuming Base64-encoded)
       const dnsQueryBuffer = Buffer.from(event.body, 'base64');
