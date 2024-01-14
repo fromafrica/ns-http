@@ -1,6 +1,6 @@
 packages:
-  - name: sample
+  - name: ns
     actions:
-      - name: hello
+      - name: http
         runtime: 'nodejs:18'
         web: raw
