@@ -1,13 +1,25 @@
 alerts:
 - rule: DEPLOYMENT_FAILED
 - rule: DOMAIN_FAILED
+domains:
+- domain: ns-http.fromafri.ca
+  type: PRIMARY
+features:
+- buildpack-stack=ubuntu-22
 functions:
 - github:
     branch: main
     deploy_on_push: true
     repo: fromafrica/ns-http
   name: ns-http
-  routes:
-  - path: /
   source_dir: /
+ingress:
+  rules:
+  - component:
+      name: ns-http
+      rewrite: /ns/http
+    match:
+      path:
+        prefix: /
 name: ns-http
+region: sfo

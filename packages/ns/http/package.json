@@ -4,6 +4,7 @@
   "description": "",
   "main": "http.js",
   "scripts": {},
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "dns-packet": "^5.6.1"
+  }
 }
