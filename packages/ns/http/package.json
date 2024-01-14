@@ -1,0 +1,9 @@
+{
+  "name": "ns-http",
+  "version": "1.0.0",
+  "description": "",
+  "main": "http.js",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,0 +1,6 @@
+packages:
+  - name: sample
+    actions:
+      - name: hello
+        runtime: 'nodejs:18'
+        web: raw
