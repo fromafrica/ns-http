@@ -1,0 +1,14 @@
+{
+  "name": "ns-http",
+  "version": "1.1.0",
+  "description": "",
+  "main": "http.js",
+  "type": "module",
+  "scripts": {
+    "start": "node http.js"
+  },
+  "dependencies": {
+    "dns-packet": "^5.6.1",
+    "node-fetch": "^3.3.2"
+  }
+}

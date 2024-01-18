@@ -1,9 +1,0 @@
-packages:
-  - name: ns
-    actions:
-      - name: http
-        runtime: 'nodejs:18'
-        web: raw
-        limits:
-          timeout: 5000
-          memory: 128
