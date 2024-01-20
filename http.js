@@ -82,8 +82,8 @@ const server = http.createServer(async function (req, res) {
             res.writeHead(200, { 'Content-Type': 'application/dns-message' });// For other domains, return NXDOMAIN
             let obj = {
                 type: 'response',
-                id: error.query.id || '',
-                questions: error.query.questions || '',
+                id: query.id || '',
+                questions: query.questions || '',
                 flags: 3
             };
             let error_response_packet = dnsPacket.encode(obj);
