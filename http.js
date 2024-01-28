@@ -4,11 +4,11 @@ import dnsPacket from 'dns-packet'
 import fetch from 'node-fetch'
 
 const server = http.createServer(async function (req, res) {
-    let data = [];
+    let data = []
 
     req.on('data', chunk => {
-        data.push(chunk);
-    });
+        data.push(chunk)
+    })
     
     req.on('end', async () => {
         try {
@@ -22,13 +22,13 @@ const server = http.createServer(async function (req, res) {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer zj5jyr4wqps4xfaiviy5`
+                        'Authorization': `Bearer ${ process.env.TOKEN }`
                     },
                     body: JSON.stringify({ domain: query.questions[0].name, type: query.questions[0].type })
                 };
 
                 try {
-                    const fetchResponse = await fetch(`https://ns-cache.fromafri.ca/dns-query`, requestOptions);
+                    const fetchResponse = await fetch(process.env.REMOTE, requestOptions)
                     if (fetchResponse.ok) {
                         const fres = await fetchResponse.json();
 
@@ -42,7 +42,7 @@ const server = http.createServer(async function (req, res) {
 
                         if (fres.status === "200") {
 
-                            console.log(fres);
+                            console.log(fres)
                             
                             // Respond authoritatively
                             let obj = {
@@ -57,8 +57,8 @@ const server = http.createServer(async function (req, res) {
                                     ttl: fres.record.ttl,
                                     data: fres.record.record // for A record, it's a string containing IP, for MX record, it's an array of objects
                                 }],
-                            };
-                            response_encoded = dnsPacket.encode(obj);
+                            }
+                            response_encoded = dnsPacket.encode(obj)
 
                         } else {
                             throw({message: 'unknown DNS query error', query: query})
@@ -75,22 +75,26 @@ const server = http.createServer(async function (req, res) {
             }
 
             // Remember to write the response to the res object, not the server.
-            res.writeHead(200, { 'Content-Type': 'application/dns-message' });
-            res.end(response_encoded);
+            res.writeHead(200, { 'Content-Type': 'application/dns-message' })
+            res.end(response_encoded)
+
         } catch (error) {
-            console.error(error.message || 'unknown error');
-            res.writeHead(200, { 'Content-Type': 'application/dns-message' });// For other domains, return NXDOMAIN
+
+            console.error(error.message || 'unknown error')
+
+            res.writeHead(200, { 'Content-Type': 'application/dns-message' }) // For other domains, return NXDOMAIN
+
             let obj = {
                 type: 'response',
                 id: query.id || '',
                 questions: query.questions || '',
                 flags: 3
             };
-            let error_response_packet = dnsPacket.encode(obj);
-            res.end(error_response_packet);
-            return;
+            let error_response_packet = dnsPacket.encode(obj)
+            res.end(error_response_packet)
+            return
         }
-    });
-});
+    })
+})
 
-server.listen(8080);
+server.listen(8080)
